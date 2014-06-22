@@ -24,8 +24,8 @@ module.exports = function(grunt) {
             dev: {
                 options: {
                     noLineComments: true,
-                    outputStyle: "expanded",
-                    // outputStyle :"compressed",
+                    // outputStyle: "expanded",
+                    outputStyle :"compressed",
                     httpImagesPath: '/images/',
                     imagesDir: 'app/images/',
                     // relativeAssets:true,
@@ -75,6 +75,9 @@ module.exports = function(grunt) {
             compass: {
                 files: ["<%= files.sass.src %>/*.scss"],
                 tasks: ["compass:dev"]
+            },
+            grunt :{
+                files :["Gruntfile.js"]
             }
         }
     });
