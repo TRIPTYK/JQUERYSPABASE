@@ -24,8 +24,8 @@ module.exports = function(grunt) {
             dev: {
                 options: {
                     noLineComments: true,
-                    // outputStyle: "expanded",
-                    outputStyle :"compressed",
+                    outputStyle: "expanded",
+                    // outputStyle :"compressed",
                     httpImagesPath: '/images/',
                     imagesDir: 'app/images/',
                     // relativeAssets:true,
@@ -37,6 +37,20 @@ module.exports = function(grunt) {
         },
         concat: {
             js: {
+                src: ["<%= files.js.vendors %>", "<%= files.js.src %>"],
+                dest: "generated/js/app.min.js"
+            }
+        },
+        uglify: {
+            generated: {
+                options: {
+                    mangle: {
+                        except: ['jQuery']
+                    },
+                    sourceMap: true,
+                    sourceMapName: 'generated/sourcemap.map',
+                    sourceMapIncludeSources:true
+                },
                 src: ["<%= files.js.vendors %>", "<%= files.js.src %>"],
                 dest: "generated/js/app.min.js"
             }
@@ -70,14 +84,14 @@ module.exports = function(grunt) {
             },
             js: {
                 files: ["<%= files.js.src %>"],
-                tasks: ["concat"]
+                tasks: ["uglify:generated"]
             },
             compass: {
                 files: ["<%= files.sass.src %>/*.scss"],
                 tasks: ["compass:dev"]
             },
-            grunt :{
-                files :["Gruntfile.js"]
+            grunt: {
+                files: ["Gruntfile.js"]
             }
         }
     });
@@ -86,6 +100,7 @@ module.exports = function(grunt) {
     require('matchdep').filterAll('grunt-*').forEach(grunt.loadNpmTasks);
     // grunt.registerTask "default", ["handlebars", "less:dev", "coffee", "concat_sourcemap", "copy", "server", "open", "watch"]
     // grunt.registerTask("default", ["compass:dev", "copy:html", "server","watch"]);
-    grunt.registerTask("default", ["compass:dev", "concat", "copy:html", "server", "watch"]);
+    grunt.registerTask("default", ["compass:dev", "uglify:generated", "copy:html", "server", "watch"]);
+    // grunt.registerTask("default", ["compass:dev", "concat", "uglify:generated", "copy:html", "server", "watch"]);
     // grunt.registerTask("default", ["ngtemplates","compass:dev", "concat", "copy:html", "server", "watch"]);
 }

@@ -18,6 +18,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "grunt-angular-templates": "~0.5.4"
+    "grunt-angular-templates": "~0.5.4",
+    "grunt-contrib-uglify": "~0.5.0"
   }
 }
